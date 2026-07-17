@@ -1,54 +1,34 @@
-import { ipcMain, shell, app, BrowserWindow } from "electron";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-ipcMain.handle("open-external", async (_event, url) => {
+import { ipcMain as d, shell as i, app as o, BrowserWindow as a } from "electron";
+import t from "node:path";
+import { fileURLToPath as h } from "node:url";
+const l = t.dirname(h(import.meta.url));
+d.handle("open-external", async (n, p) => {
   try {
-    await shell.openExternal(url);
-    return { success: true };
-  } catch (err) {
-    console.error("Failed to open external link:", err);
-    return { success: false, error: err.message };
+    return await i.openExternal(p), { success: !0 };
+  } catch (s) {
+    return console.error("Failed to open external link:", s), { success: !1, error: s.message };
   }
 });
-process.env.DIST = path.join(__dirname, "../dist");
-process.env.VITE_PUBLIC = app.isPackaged ? process.env.DIST : path.join(process.env.DIST, "../public");
-let win;
-const VITE_DEV_SERVER_URL = process.env["VITE_DEV_SERVER_URL"];
-function createWindow() {
-  win = new BrowserWindow({
-    icon: path.join(process.env.VITE_PUBLIC, "electron-vite.svg"),
+process.env.DIST = t.join(l, "../dist");
+process.env.VITE_PUBLIC = o.isPackaged ? process.env.DIST : t.join(process.env.DIST, "../public");
+let e;
+const r = process.env.VITE_DEV_SERVER_URL;
+function c() {
+  e = new a({
+    icon: t.join(process.env.VITE_PUBLIC, "electron-vite.svg"),
     webPreferences: {
-      preload: path.join(__dirname, "preload.js")
+      preload: t.join(l, "preload.js")
     },
     width: 1200,
     height: 800
-  });
-  win.webContents.setWindowOpenHandler(({ url }) => {
-    if (url.startsWith("https:") || url.startsWith("http:") || url.startsWith("mailto:") || url.startsWith("sms:")) {
-      shell.openExternal(url);
-      return { action: "deny" };
-    }
-    return { action: "allow" };
-  });
-  win.webContents.on("did-finish-load", () => {
-    win == null ? void 0 : win.webContents.send("main-process-message", (/* @__PURE__ */ new Date()).toLocaleString());
-  });
-  if (VITE_DEV_SERVER_URL) {
-    win.loadURL(VITE_DEV_SERVER_URL);
-  } else {
-    win.loadFile(path.join(process.env.DIST, "index.html"));
-  }
+  }), e.webContents.setWindowOpenHandler(({ url: n }) => n.startsWith("https:") || n.startsWith("http:") || n.startsWith("mailto:") || n.startsWith("sms:") ? (i.openExternal(n), { action: "deny" }) : { action: "allow" }), e.webContents.on("did-finish-load", () => {
+    e == null || e.webContents.send("main-process-message", (/* @__PURE__ */ new Date()).toLocaleString());
+  }), r ? e.loadURL(r) : e.loadFile(t.join(process.env.DIST, "index.html"));
 }
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    app.quit();
-    win = null;
-  }
+o.on("window-all-closed", () => {
+  process.platform !== "darwin" && (o.quit(), e = null);
 });
-app.on("activate", () => {
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
-  }
+o.on("activate", () => {
+  a.getAllWindows().length === 0 && c();
 });
-app.whenReady().then(createWindow);
+o.whenReady().then(c);

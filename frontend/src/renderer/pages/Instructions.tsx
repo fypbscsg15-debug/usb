@@ -18,11 +18,11 @@ import jsPDF from "jspdf";
 type SendChannel = "whatsapp" | "email" | "print";
 
 const translateTimingToUrdu = (frequency: string = "", duration: string = ""): string => {
-  const freq = frequency.toLowerCase().trim();
-  let dur = duration.toLowerCase().trim();
+  const freq = (frequency || "").toLowerCase().trim();
+  let dur = (duration || "").toLowerCase().trim();
 
   // 1. Translate frequency
-  let freqUrdu = frequency;
+  let freqUrdu = frequency || "";
   if (/^once\s+daily$|^1x\/day$|^1\/day$|^once\s+a\s+day$|^1\s+time\s+a\s+day$|^1\s+time\s+daily$|^1\s+times\s+daily$|^1\s+x\s+daily$/.test(freq)) {
     freqUrdu = "روزانہ ایک بار";
   } else if (/^twice\s+daily$|^2x\/day$|^2\/day$|^twice\s+a\s+day$|^2\s+times\s+a\s+day$|^2\s+time\s+daily$|^2\s+times\s+daily$|^2\s+x\s+daily$/.test(freq)) {
@@ -139,20 +139,20 @@ const Instructions = () => {
     );
   }
 
-  const englishMessage = `Patient Instructions for ${rx.patientName}
+  const englishMessage = `Patient Instructions for ${rx.patientName || "Patient"}
 
 Medications:
-${rx.medicines.map((m: any, i: number) => `${i + 1}. ${m.name} ${m.dosage} — ${m.frequency} for ${m.duration}`).join("\n")}
+${rx.medicines.map((m: any, i: number) => `${i + 1}. ${m.name || ""} ${m.dosage || ""} — ${m.frequency || ""} for ${m.duration || ""}`).join("\n")}
 
 Timing: Take with food unless otherwise specified.
 Storage: Store at room temperature, away from direct sunlight.
 Precautions: Do not skip doses. Complete the full course.
 Warnings: Contact your pharmacist if you experience adverse effects.`;
 
-  const urduMessage = `${rx.patientName} کے لیے ہدایات
+  const urduMessage = `${rx.patientName || "مریض"} کے لیے ہدایات
 
 دوائیں:
-${rx.medicines.map((m: any, i: number) => `${i + 1}. ${m.name} ${m.dosage} — ${translateTimingToUrdu(m.frequency, m.duration)}`).join("\n")}
+${rx.medicines.map((m: any, i: number) => `${i + 1}. ${m.name || ""} ${m.dosage || ""} — ${translateTimingToUrdu(m.frequency, m.duration)}`).join("\n")}
 
 وقت: کھانے کے ساتھ لیں جب تک کہ ہدایت نہ کی جائے۔
 ذخیرہ: کمرے کے درجہ حرارت پر، براہِ راست دھوپ سے دور رکھیں۔
@@ -166,11 +166,11 @@ ${rx.medicines.map((m: any, i: number) => `${i + 1}. ${m.name} ${m.dosage} — $
     doc.setFontSize(16);
     doc.text("Patient Instructions", 14, 18);
     doc.setFontSize(11);
-    doc.text(`Patient: ${rx.patientName}   Age: ${rx.patientAge}   Gender: ${rx.patientGender}`, 14, 28);
+    doc.text(`Patient: ${rx.patientName || "Patient"}   Age: ${rx.patientAge || ""}   Gender: ${rx.patientGender || ""}`, 14, 28);
     doc.text(`Date: ${new Date().toLocaleDateString()}`, 14, 35);
     let y = 48;
-    rx.medicines.forEach((m, i) => {
-      doc.text(`${i + 1}. ${m.name} ${m.dosage} — ${m.frequency} for ${m.duration}`, 14, y);
+    rx.medicines.forEach((m: any, i: number) => {
+      doc.text(`${i + 1}. ${m.name || ""} ${m.dosage || ""} — ${m.frequency || ""} for ${m.duration || ""}`, 14, y);
       y += 7;
     });
     doc.save(`instructions_${rx.id}.pdf`);
