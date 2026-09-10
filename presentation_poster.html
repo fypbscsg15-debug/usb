@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Pharmacist Support System - Presentation Poster</title>
+  <style>
+    :root {
+      --primary: #0f4c81; /* Medical Blue */
+      --secondary: #1d7874; /* Dark Teal */
+      --accent: #e63946; /* Alert Red */
+      --bg: #f8f9fa; /* Off-white */
+      --card-bg: #ffffff;
+      --text: #212529;
+      --text-muted: #6c757d;
+      --border: #dee2e6;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #e9ecef;
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+      min-height: 100vh;
+    }
+
+    /* Poster Container: A0 portrait ratio is roughly 1 : 1.414, or standard 3:4 aspect ratio. 
+       Let's size it so it looks like a large premium exhibition poster */
+    .poster {
+      background: var(--bg);
+      width: 1200px;
+      height: 1600px; /* 3:4 aspect ratio */
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      border: 8px solid #ffffff;
+    }
+
+    /* Header Design */
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      padding: 40px 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 5px solid #20b2aa;
+      position: relative;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, #e63946, #ffb703, #2a9d8f);
+    }
+
+    .header-logo-title {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .logo-container img {
+      height: 100px;
+      width: auto;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+    }
+
+    .header-text h1 {
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 5px;
+    }
+
+    .header-text h2 {
+      font-size: 20px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .meta-info {
+      text-align: right;
+    }
+
+    .meta-info p {
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .meta-info .team-leader {
+      font-weight: 700;
+      color: #ffd166;
+    }
+
+    .meta-info .advisor {
+      font-style: italic;
+      color: #e0f2f1;
+      margin-top: 5px;
+      font-weight: 600;
+    }
+
+    /* Main Poster Body Layout */
+    .poster-body {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr; /* Left: Content, Right: Screenshots */
+      gap: 40px;
+      padding: 40px 50px;
+      overflow: hidden;
+    }
+
+    /* Left Column Styles */
+    .left-column {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .section-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+      border-left: 5px solid var(--primary);
+    }
+
+    .section-card.alt-border {
+      border-left-color: var(--secondary);
+    }
+
+    .section-card h3 {
+      font-size: 22px;
+      color: var(--primary);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .section-card h3 svg {
+      width: 24px;
+      height: 24px;
+      stroke: currentColor;
+    }
+
+    /* Problem and Solution Lists */
+    .bullets-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .bullets-list li {
+      position: relative;
+      padding-left: 30px;
+      font-size: 17px;
+      line-height: 1.6;
+      color: #333333;
+    }
+
+    .bullets-list li::before {
+      content: "•";
+      color: var(--accent);
+      font-size: 32px;
+      position: absolute;
+      left: 5px;
+      top: -6px;
+    }
+
+    .section-card.alt-border .bullets-list li::before {
+      color: var(--secondary);
+    }
+
+    /* Key Features Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .feature-item {
+      display: flex;
+      gap: 15px;
+      padding: 15px;
+      background: #fdfdfd;
+      border: 1px solid #f1f3f5;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .feature-item:hover {
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      border-color: #e2e6ea;
+    }
+
+    .feature-icon-wrapper {
+      background: #e3f2fd;
+      color: var(--primary);
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .feature-icon-wrapper svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .feature-text h4 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #111111;
+      margin-bottom: 5px;
+    }
+
+    .feature-text p {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Technology Stack */
+    .tech-stack-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .tech-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .tech-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #f1f3f5;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 15px;
+      color: #495057;
+    }
+
+    .tech-badge svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Architecture Diagram (Small & simple, embedded in left column) */
+    .architecture-box {
+      margin-top: 15px;
+      border: 1px dashed var(--border);
+      padding: 15px;
+      border-radius: 8px;
+      background: #fafafa;
+    }
+
+    .arch-flow {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+      gap: 8px;
+    }
+
+    .arch-step {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      flex: 1;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .arch-step.highlight {
+      background: #e8f5e9;
+      border-color: #81c784;
+      color: #2e7d32;
+    }
+
+    .arch-arrow {
+      color: var(--text-muted);
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    /* Right Column - Dedicated entirely to screenshots */
+    .right-column {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      justify-content: space-between;
+    }
+
+    .screenshot-wrapper {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0; /* allows flex shrinking */
+    }
+
+    .screenshot-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .screenshot-title span {
+      background: #e3f2fd;
+      color: var(--primary);
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 12px;
+      text-transform: uppercase;
+    }
+
+    .screenshot-frame {
+      border: 1px solid #e9ecef;
+      border-radius: 8px;
+      overflow: hidden;
+      flex: 1;
+      position: relative;
+      background: #f8f9fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .screenshot-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Footer Design */
+    footer {
+      background: #111a24;
+      color: white;
+      padding: 30px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 4px solid var(--primary);
+    }
+
+    .footer-left {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .footer-left h4 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffd166;
+    }
+
+    .footer-left p {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .footer-right {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .qr-container {
+      background: white;
+      padding: 10px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .qr-container img {
+      width: 90px;
+      height: 90px;
+    }
+
+    .qr-label {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.4;
+      font-weight: 500;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="poster" id="poster-element">
+    
+    <!-- Top Header -->
+    <header>
+      <div class="header-logo-title">
+        <div class="logo-container">
+          <!-- Logo loaded directly from project -->
+          <img src="spss_logo.jpg" alt="SPSS Logo">
+        </div>
+        <div class="header-text">
+          <h1>Smart Pharmacist Support System</h1>
+          <h2>Intelligent & Offline Decision Support Solution • BSCS Final Project</h2>
+        </div>
+      </div>
+      <div class="meta-info">
+        <p><strong>Presented by:</strong> Group FYP26-CS-G15</p>
+        <p class="team-leader">Qasim Majid • Rohaan Naseer • Fiza Ali</p>
+        <p class="advisor">Supervisor: Sheeza Shabir</p>
+        <p style="font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 4px;">University of Central Punjab</p>
+      </div>
+    </header>
+
+    <!-- Poster Content Grid -->
+    <div class="poster-body">
+      
+      <!-- Left Column (Text & Tech Stack) -->
+      <div class="left-column">
+        
+        <!-- Problem Statement -->
+        <div class="section-card">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            Problem Statement
+          </h3>
+          <ul class="bullets-list">
+            <li><strong>Severe Medical Risks:</strong> Prescription reading errors are a leading cause of patient harm, wrong dosages, and severe drug-drug interactions globally.</li>
+            <li><strong>Highly Challenging Environments:</strong> Pharmacists work under extreme time constraints, manual workflows, and must decipher illegible handwritten prescriptions.</li>
+            <li><strong>High Costs & Alert Fatigue:</strong> Existing Clinical Decision Support Systems (CDSS) are prohibitively expensive, require active internet connections, and suffer from notification overload.</li>
+          </ul>
+        </div>
+
+        <!-- Proposed Solution -->
+        <div class="section-card alt-border">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+            Proposed Solution
+          </h3>
+          <ul class="bullets-list">
+            <li><strong>Automated Offline System:</strong> A lightweight, thick-client desktop application running fully offline, ensuring maximum data privacy and instantaneous verification speed.</li>
+            <li><strong>Hybrid Safety Verification:</strong> Employs state-of-the-art OCR (PaddleOCR) for printed & handwritten script reading, integrated with a trained Machine Learning similarity model and DrugBank knowledge rules.</li>
+            <li><strong>Optimized Pharmacist Workflow:</strong> Automatically generates patient-friendly bilingual instructions (English & Urdu) and integrates automated inventory alerts & analytics.</li>
+          </ul>
+        </div>
+
+        <!-- Key Features -->
+        <div class="section-card">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+            Key System Features
+          </h3>
+          <div class="features-grid">
+            
+            <div class="feature-item">
+              <div class="feature-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+              </div>
+              <div class="feature-text">
+                <h4>OCR Extraction</h4>
+                <p>Recognizes handwritten/printed scripts with up to 97% accuracy using PaddleOCR.</p>
+              </div>
+            </div>
+
+            <div class="feature-item">
+              <div class="feature-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <div class="feature-text">
+                <h4>AI Interaction Detection</h4>
+                <p>Trained ML similarity model checks drug-drug interactions with high confidence.</p>
+              </div>
+            </div>
+
+            <div class="feature-item">
+              <div class="feature-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </div>
+              <div class="feature-text">
+                <h4>Bilingual Instructions</h4>
+                <p>Instantly generates clear patient dosage advice in both English and Urdu (EN/UR).</p>
+              </div>
+            </div>
+
+            <div class="feature-item">
+              <div class="feature-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+              </div>
+              <div class="feature-text">
+                <h4>Interactive Analytics</h4>
+                <p>Tracks prescription volume, error rates, and verification latency in real-time.</p>
+              </div>
+            </div>
+
+            <div class="feature-item">
+              <div class="feature-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              </div>
+              <div class="feature-text">
+                <h4>Inventory Alerts</h4>
+                <p>Automatically triggers low-stock & medicine expiry alerts with zero lag.</p>
+              </div>
+            </div>
+
+            <div class="feature-item">
+              <div class="feature-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </div>
+              <div class="feature-text">
+                <h4>Security & Audit Logs</h4>
+                <p>Fully offline encryption (AES-256) with complete audit trail for compliance.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Technology Stack -->
+        <div class="section-card alt-border">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+              <polyline points="2 17 12 22 22 17"/>
+              <polyline points="2 12 12 17 22 12"/>
+            </svg>
+            Technology Stack & System Architecture
+          </h3>
+          <div class="tech-stack-container">
+            <div class="tech-badges">
+              <div class="tech-badge">
+                <!-- React Icon -->
+                <svg viewBox="0 0 100 100" fill="none" style="stroke: #00d8ff; stroke-width: 4;">
+                  <ellipse cx="50" cy="50" rx="8" ry="20" transform="rotate(30 50 50)"/>
+                  <ellipse cx="50" cy="50" rx="8" ry="20" transform="rotate(90 50 50)"/>
+                  <ellipse cx="50" cy="50" rx="8" ry="20" transform="rotate(150 50 50)"/>
+                  <circle cx="50" cy="50" r="4" fill="#00d8ff"/>
+                </svg>
+                React.js (Frontend)
+              </div>
+              <div class="tech-badge">
+                <!-- Python Icon -->
+                <svg viewBox="0 0 24 24" fill="currentColor" style="color: #3776ab;">
+                  <path d="M12 2c5.522 0 10 4.477 10 10s-4.478 10-10 10-10-4.477-10-10 4.478-10 10-10zm-1.52 3.19c-.878 0-1.57.693-1.57 1.571v1.077c0 .285.231.516.516.516h5.163c.285 0 .516-.231.516-.516v-1.077c0-.878-.692-1.571-1.57-1.571H10.48zm3.04 13.62c.878 0 1.57-.693 1.57-1.571v-1.077a.517.517 0 0 0-.516-.516H9.41a.517.517 0 0 0-.516.516v1.077c0 .878.692 1.571 1.57 1.571h3.047z"/>
+                </svg>
+                FastAPI & Python (Backend)
+              </div>
+              <div class="tech-badge">
+                <!-- Database Icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="#47a248" stroke-width="2">
+                  <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                  <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                  <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/>
+                </svg>
+                SQLite (Offline Database)
+              </div>
+              <div class="tech-badge">
+                <!-- Electron Icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="#47848f" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <ellipse cx="12" cy="12" rx="3" ry="10" transform="rotate(45 12 12)"/>
+                  <ellipse cx="12" cy="12" rx="3" ry="10" transform="rotate(-45 12 12)"/>
+                </svg>
+                Electron (Desktop Shell)
+              </div>
+            </div>
+            
+            <!-- Simple Architecture Diagram -->
+            <div class="architecture-box">
+              <div class="arch-flow">
+                <div class="arch-step">
+                  <strong>Pharmacist Input</strong><br>Prescription Image
+                </div>
+                <div class="arch-arrow">➔</div>
+                <div class="arch-step highlight">
+                  <strong>PaddleOCR Engine</strong><br>Handwritten Text Ext.
+                </div>
+                <div class="arch-arrow">➔</div>
+                <div class="arch-step highlight">
+                  <strong>Safety ML Model</strong><br>Drug Interaction Check
+                </div>
+                <div class="arch-arrow">➔</div>
+                <div class="arch-step">
+                  <strong>Verified Dispense</strong><br>Urdu/English Labels
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column (Screenshots stack) -->
+      <div class="right-column">
+        
+        <!-- Screenshot 1: Main Dashboard -->
+        <div class="screenshot-wrapper">
+          <div class="screenshot-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg>
+            Main Dashboard Screen <span>Analytics Overview</span>
+          </div>
+          <div class="screenshot-frame">
+            <!-- Simulated screenshot utilizing project theme -->
+            <svg viewBox="0 0 800 450" width="100%" height="100%">
+              <rect width="800" height="450" fill="#f8f9fa"/>
+              <!-- Top bar -->
+              <rect width="800" height="50" fill="#0f4c81"/>
+              <text x="20" y="32" fill="white" font-family="sans-serif" font-size="16" font-weight="bold">Smart Pharmacist Support System</text>
+              <rect x="680" y="10" width="100" height="30" rx="5" fill="#1d7874"/>
+              <text x="730" y="30" fill="white" font-family="sans-serif" font-size="12" text-anchor="middle">Active: Ali</text>
+              <!-- Cards -->
+              <rect x="20" y="70" width="230" height="100" rx="10" fill="white" stroke="#dee2e6" stroke-width="2"/>
+              <text x="40" y="105" fill="#6c757d" font-family="sans-serif" font-size="13">Today's Prescriptions</text>
+              <text x="40" y="145" fill="#0f4c81" font-family="sans-serif" font-size="36" font-weight="bold">12</text>
+              
+              <rect x="285" y="70" width="230" height="100" rx="10" fill="white" stroke="#dee2e6" stroke-width="2"/>
+              <text x="305" y="105" fill="#6c757d" font-family="sans-serif" font-size="13">Pending Verification</text>
+              <text x="305" y="145" fill="#e63946" font-family="sans-serif" font-size="36" font-weight="bold">3</text>
+              
+              <rect x="550" y="70" width="230" height="100" rx="10" fill="white" stroke="#dee2e6" stroke-width="2"/>
+              <text x="570" y="105" fill="#6c757d" font-family="sans-serif" font-size="13">Error Detection Rate</text>
+              <text x="570" y="145" fill="#1d7874" font-family="sans-serif" font-size="36" font-weight="bold">100%</text>
+
+              <!-- Chart / Info area -->
+              <rect x="20" y="190" width="760" height="240" rx="10" fill="white" stroke="#dee2e6" stroke-width="2"/>
+              <text x="40" y="225" fill="#212529" font-family="sans-serif" font-size="16" font-weight="bold">Recent Verification Workflows</text>
+              
+              <rect x="40" y="250" width="720" height="40" rx="5" fill="#f8f9fa" stroke="#e9ecef"/>
+              <circle cx="65" cy="270" r="10" fill="#2e7d32"/>
+              <text x="90" y="275" fill="#333" font-family="sans-serif" font-size="14">Prescription #08DA - Extracted & Verified</text>
+              <text x="630" y="275" fill="#6c757d" font-family="sans-serif" font-size="13">2 mins ago</text>
+
+              <rect x="40" y="300" width="720" height="40" rx="5" fill="#f8f9fa" stroke="#e9ecef"/>
+              <circle cx="65" cy="320" r="10" fill="#e63946"/>
+              <text x="90" y="325" fill="#333" font-family="sans-serif" font-size="14">Prescription #FF2B - Alert Triggered (Warfarin + Aspirin)</text>
+              <text x="630" y="325" fill="#6c757d" font-family="sans-serif" font-size="13">10 mins ago</text>
+
+              <rect x="40" y="350" width="720" height="40" rx="5" fill="#f8f9fa" stroke="#e9ecef"/>
+              <circle cx="65" cy="370" r="10" fill="#2e7d32"/>
+              <text x="90" y="375" fill="#333" font-family="sans-serif" font-size="14">Prescription #0921 - Extracted & Verified</text>
+              <text x="630" y="370" fill="#6c757d" font-family="sans-serif" font-size="13">25 mins ago</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Screenshot 2: OCR Review & Correction -->
+        <div class="screenshot-wrapper">
+          <div class="screenshot-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4z"/></svg>
+            OCR Extraction & Review Screen <span>PaddleOCR Processing</span>
+          </div>
+          <div class="screenshot-frame">
+            <svg viewBox="0 0 800 450" width="100%" height="100%">
+              <rect width="800" height="450" fill="#f8f9fa"/>
+              <!-- Side prescription thumbnail -->
+              <rect x="20" y="20" width="280" height="410" rx="10" fill="white" stroke="#dee2e6" stroke-width="2"/>
+              <text x="160" y="50" text-anchor="middle" fill="#6c757d" font-family="sans-serif" font-size="14" font-weight="bold">Prescription Image Preview</text>
+              <!-- Scribbles to represent prescription -->
+              <rect x="40" y="80" width="240" height="30" fill="#f1f3f5" rx="5"/>
+              <text x="50" y="100" font-family="sans-serif" fill="#888" font-size="12">METRO CARE CLINIC</text>
+              <line x1="50" y1="150" x2="250" y2="150" stroke="#888" stroke-dasharray="5,5"/>
+              <line x1="50" y1="180" x2="200" y2="180" stroke="#888" stroke-dasharray="5,5"/>
+              <line x1="50" y1="210" x2="230" y2="210" stroke="#888" stroke-dasharray="5,5"/>
+              <rect x="40" y="320" width="240" height="90" fill="#e8f5e9" rx="5"/>
+              <text x="50" y="350" font-family="sans-serif" fill="#2e7d32" font-size="12" font-weight="bold">PaddleOCR Confidence Score</text>
+              <text x="50" y="390" font-family="sans-serif" fill="#2e7d32" font-size="28" font-weight="bold">99%</text>
+
+              <!-- Extracted Items editor -->
+              <rect x="320" y="20" width="460" height="410" rx="10" fill="white" stroke="#dee2e6" stroke-width="2"/>
+              <text x="340" y="50" fill="#212529" font-family="sans-serif" font-size="16" font-weight="bold">Extracted Medications & Patient Info</text>
+              
+              <text x="340" y="90" fill="#6c757d" font-family="sans-serif" font-size="13">Patient Name</text>
+              <rect x="340" y="105" width="200" height="35" rx="5" fill="#f8f9fa" stroke="#dee2e6"/>
+              <text x="350" y="127" fill="#333" font-family="sans-serif" font-size="13">John Doe</text>
+
+              <text x="560" y="90" fill="#6c757d" font-family="sans-serif" font-size="13">Age</text>
+              <rect x="560" y="105" width="200" height="35" rx="5" fill="#f8f9fa" stroke="#dee2e6"/>
+              <text x="570" y="127" fill="#333" font-family="sans-serif" font-size="13">42</text>
+
+              <!-- Table of medicines -->
+              <text x="340" y="170" fill="#212529" font-family="sans-serif" font-size="14" font-weight="bold">Extracted Drugs</text>
+              <rect x="340" y="185" width="420" height="180" rx="5" fill="white" stroke="#dee2e6"/>
+              
+              <!-- Table header -->
+              <rect x="340" y="185" width="420" height="30" fill="#f8f9fa"/>
+              <text x="355" y="205" fill="#495057" font-family="sans-serif" font-size="12" font-weight="bold">Medicine</text>
+              <text x="490" y="205" fill="#495057" font-family="sans-serif" font-size="12" font-weight="bold">Dosage</text>
+              <text x="610" y="205" fill="#495057" font-family="sans-serif" font-size="12" font-weight="bold">Frequency</text>
+
+              <!-- Row 1 -->
+              <text x="355" y="240" fill="#333" font-family="sans-serif" font-size="13">Warfarin</text>
+              <text x="490" y="240" fill="#333" font-family="sans-serif" font-size="13">50 mg</text>
+              <text x="610" y="240" fill="#333" font-family="sans-serif" font-size="13">3x / day</text>
+
+              <!-- Row 2 -->
+              <text x="355" y="275" fill="#333" font-family="sans-serif" font-size="13">Ibuprofen</text>
+              <text x="490" y="275" fill="#333" font-family="sans-serif" font-size="13">1000 mg</text>
+              <text x="610" y="275" fill="#333" font-family="sans-serif" font-size="13">5x / day</text>
+              
+              <!-- Confirm Button -->
+              <rect x="560" y="380" width="200" height="40" rx="5" fill="#0f4c81"/>
+              <text x="660" y="405" fill="white" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle">Verify Safety Engine</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Screenshot 3: Safety Alerts & Verification -->
+        <div class="screenshot-wrapper">
+          <div class="screenshot-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            Safety Alerts & Verification Dashboard <span>DrugBank Safety Checks</span>
+          </div>
+          <div class="screenshot-frame">
+            <svg viewBox="0 0 800 450" width="100%" height="100%">
+              <rect width="800" height="450" fill="#f8f9fa"/>
+              <rect x="20" y="20" width="760" height="410" rx="10" fill="white" stroke="#dee2e6" stroke-width="2"/>
+              <text x="40" y="50" fill="#212529" font-family="sans-serif" font-size="18" font-weight="bold">Prescription Safety Alerts</text>
+              
+              <!-- Red critical alert card -->
+              <rect x="40" y="80" width="720" height="130" rx="8" fill="#fff5f5" stroke="#ffe3e3" stroke-width="2"/>
+              <rect x="40" y="80" width="10" height="130" fill="#e63946"/>
+              <text x="70" y="115" fill="#e63946" font-family="sans-serif" font-size="16" font-weight="bold">HIGH RISK: Drug-Drug Interaction Detected</text>
+              <text x="70" y="145" fill="#495057" font-family="sans-serif" font-size="14">Interaction: Warfarin + Ibuprofen</text>
+              <text x="70" y="170" fill="#6c757d" font-family="sans-serif" font-size="13">Description: Ibuprofen may increase the anticoagulant activities of Warfarin. Avoid combination.</text>
+              
+              <!-- Yellow moderate alert card -->
+              <rect x="40" y="230" width="720" height="110" rx="8" fill="#fff9db" stroke="#ffe066" stroke-width="2"/>
+              <rect x="40" y="230" width="10" height="110" fill="#f59f00"/>
+              <text x="70" y="260" fill="#f59f00" font-family="sans-serif" font-size="15" font-weight="bold">MEDIUM RISK: Dosage Limit Exceeded</text>
+              <text x="70" y="290" fill="#495057" font-family="sans-serif" font-size="13">Ibuprofen: 1000 mg 5 times daily exceeds maximum recommended daily limit (3200 mg/day).</text>
+              
+              <!-- Decision Action buttons -->
+              <rect x="40" y="365" width="220" height="45" rx="5" fill="#f1f3f5" stroke="#dee2e6"/>
+              <text x="150" y="392" fill="#495057" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle">Reject Prescription</text>
+
+              <rect x="280" y="365" width="220" height="45" rx="5" fill="#ffd8a8" stroke="#ffa94d"/>
+              <text x="390" y="392" fill="#d9480f" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle">Override (Require Reason)</text>
+
+              <rect x="520" y="365" width="240" height="45" rx="5" fill="#2b8a3e"/>
+              <text x="640" y="392" fill="white" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle">Approve & Print Instructions</text>
+            </svg>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Bottom Footer -->
+    <footer>
+      <div class="footer-left">
+        <h4>Group ID: FYP26-CS-G15</h4>
+        <p>Department of Computer Science • Faculty of Information Technology & Computer Science</p>
+        <p>University of Central Punjab, Lahore, Pakistan • July 2026</p>
+      </div>
+      <div class="footer-right">
+        <span class="qr-label">Scan to watch<br><strong>Project Demo & Video</strong><br>on Github</span>
+        <div class="qr-container">
+          <!-- Direct simple QR code representation (svg with grid squares for realistic look) -->
+          <svg width="80" height="80" viewBox="0 0 29 29" fill="black" shape-rendering="crispEdges">
+            <!-- QR Borders & Position blocks -->
+            <rect x="0" y="0" width="7" height="7"/>
+            <rect x="1" y="1" width="5" height="5" fill="white"/>
+            <rect x="2" y="2" width="3" height="3"/>
+            
+            <rect x="22" y="0" width="7" height="7"/>
+            <rect x="23" y="1" width="5" height="5" fill="white"/>
+            <rect x="24" y="2" width="3" height="3"/>
+
+            <rect x="0" y="22" width="7" height="7"/>
+            <rect x="1" y="23" width="5" height="5" fill="white"/>
+            <rect x="2" y="24" width="3" height="3"/>
+            
+            <!-- Random static-like squares representing QR encoding data -->
+            <rect x="9" y="2" width="2" height="1"/>
+            <rect x="15" y="0" width="3" height="3"/>
+            <rect x="13" y="5" width="1" height="4"/>
+            <rect x="18" y="6" width="3" height="1"/>
+            <rect x="9" y="12" width="4" height="4"/>
+            <rect x="17" y="11" width="2" height="5"/>
+            <rect x="24" y="13" width="2" height="2"/>
+            <rect x="10" y="19" width="3" height="2"/>
+            <rect x="15" y="22" width="4" height="4"/>
+            <rect x="21" y="19" width="3" height="3"/>
+            <rect x="25" y="24" width="2" height="2"/>
+          </svg>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+</body>
+</html>

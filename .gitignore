@@ -36,3 +36,6 @@ Thumbs.db
 
 # Vite temporary files
 *.mjs
+
+# Office temporary files
+~$*
