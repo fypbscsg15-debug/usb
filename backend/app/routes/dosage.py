@@ -5,6 +5,7 @@ import requests
 from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
+from ..config import settings
 
 router = APIRouter(prefix="/dosage", tags=["dosage"])
 
@@ -73,8 +74,8 @@ def check_dosage(body: DosageCheckRequest):
     dose = body.dose.strip()
     age = body.age.strip()
     
-    # Prioritize provided API key, fallback to environment variable
-    api_key = (body.api_key or "").strip() or os.getenv("NVIDIA_API_KEY", "")
+    # Prioritize provided API key, fallback to environment variable / settings
+    api_key = (body.api_key or "").strip() or settings.NVIDIA_API_KEY or os.getenv("NVIDIA_API_KEY", "")
 
     if not medicine:
         raise HTTPException(status_code=400, detail="Medicine name is required")
